@@ -1,6 +1,8 @@
 
 
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
+
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,12 +21,15 @@ public class TestsExample {
 
 
         Assert.assertEquals(response.statusCode(),200);
-        //        System.out.println(RestAssured.get("https://petstore.swagger.io/v2/pet/findByStatus?status=available").asPrettyString());
     }
 
     @Test
     public void test2(){
         baseURI="https://reqres.in/api/";
-      //  given().get("users?page=2").then().statusCode(200).body("id[1]",equals("") )
+
+        given().get("users?page=2").
+                then().statusCode(200).
+                body("data[1].id",equalTo(8))
+                .log().all();
     }
 }
